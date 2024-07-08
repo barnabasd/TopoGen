@@ -27,7 +27,7 @@ function generate() {
     const interpolatedColors = interpolateColors(startColorChanger.value, endColorChnager.value, originalColors.length - 1);
     let time5 = colorReplace(output, originalColors, interpolatedColors);
 
-    timeDisplay.innerText = (time1 + time2 + time3 + time4 + time5) + "ms";
+    timeDisplay.innerText = Math.round(time1 + time2 + time3 + time4 + time5) + "ms";
 }
 
 generate();
