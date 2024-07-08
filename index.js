@@ -16,16 +16,16 @@ function fillCanvas(canvas) {
     ctx.fillRect(0, 0, parseInt(widthChnager.value), parseInt(heightChnager.value));
 }
 
-function generate() {
+async function generate() {
     fillCanvas(output);
-    let time1 = randomNoise(output);
-    let time2 = perlinNoise(output);
-    let time3 = blurCanvas(output, parseInt(blurChanger.value));
-    let time4 = posterizeCanvas(output, parseInt(posterizeLevelChanger.value));
+    let time1 = await randomNoise(output);
+    let time2 = await perlinNoise(output);
+    let time3 = await blurCanvas(output, parseInt(blurChanger.value));
+    let time4 = await posterizeCanvas(output, parseInt(posterizeLevelChanger.value));
     
     const originalColors = sortHexColorsByBrightness(getCanvasColors(output));
     const interpolatedColors = interpolateColors(startColorChanger.value, endColorChnager.value, originalColors.length - 1);
-    let time5 = colorReplace(output, originalColors, interpolatedColors);
+    let time5 = await colorReplace(output, originalColors, interpolatedColors);
 
     timeDisplay.innerText = (time1 + time2 + time3 + time4 + time5) + "ms";
 }
