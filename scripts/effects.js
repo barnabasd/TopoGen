@@ -44,25 +44,33 @@ function posterizeCanvas(canvas, radius) {
 }
 
 function colorReplace(canvas, originalList, replaceList) {
-    if (originalList.length !== replaceList.length)
-    { alert("Differing original and replacement color count!"); return; }
+    if (originalList.length !== replaceList.length) {
+        alert("Differing original and replacement color count!");
+        return;
+    }
+
     return new Promise(resolve => {
         const startTime = performance.now();
         const ctx = canvas.getContext('2d');
-        let _imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        let imageData = _imageData.data;
+        const _imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const imageData = _imageData.data;
+        const colorMap = new Map();
+        for (let i = 0; i < originalList.length; i++) {
+            colorMap.set(originalList[i], hexToRgb(replaceList[i]));
+        }
         for (let i = 0; i < imageData.length; i += 4) {
             const r = imageData[i], g = imageData[i + 1], b = imageData[i + 2];
-            const index = originalList.indexOf(rgbToHex({ r, g, b }));
-            if (index !== -1) {
-                imageData[i + 0] = hexToRgb(replaceList[index]).r;
-                imageData[i + 1] = hexToRgb(replaceList[index]).g;
-                imageData[i + 2] = hexToRgb(replaceList[index]).b;
+            const originalHex = rgbToHex({ r, g, b });
+            if (colorMap.has(originalHex)) {
+                const replacementColor = colorMap.get(originalHex);
+                imageData[i] = replacementColor.r;
+                imageData[i + 1] = replacementColor.g;
+                imageData[i + 2] = replacementColor.b;
             }
         }
         ctx.putImageData(_imageData, 0, 0);
         const endTime = performance.now();
         colorTimerDisplay.innerText = Math.floor(endTime - startTime) + "ms";
-        resolve(endTime - startTime)
+        resolve(endTime - startTime);
     });
 }
