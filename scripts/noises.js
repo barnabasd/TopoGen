@@ -14,7 +14,7 @@ function randomNoise(canvas) {
     }
     ctx.putImageData(imageData, 0, 0);
     const endTime = performance.now();
-    randomNoiseTimerDisplay.innerText = (endTime - startTime) + "ms";
+    randomNoiseTimerDisplay.innerText = Math.round(endTime - startTime) + "ms";
     return endTime - startTime;
 }
 
@@ -34,6 +34,6 @@ function perlinNoise(canvas) {
     }
     g.restore();
     const endTime = performance.now();
-    perlinNoiseTimerDisplay.innerText = (endTime - startTime) + "ms";
+    perlinNoiseTimerDisplay.innerText = Math.round(endTime - startTime) + "ms";
     return endTime - startTime;
 }
