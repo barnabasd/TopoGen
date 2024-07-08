@@ -25,7 +25,6 @@ function generate() {
     
     const originalColors = sortHexColorsByBrightness(getCanvasColors(output));
     const interpolatedColors = interpolateColors(startColorChanger.value, endColorChnager.value, originalColors.length - 1);
-    displayColors(originalColors, interpolatedColors);
     let time5 = colorReplace(output, originalColors, interpolatedColors);
 
     timeDisplay.innerText = (time1 + time2 + time3 + time4 + time5) + "ms";

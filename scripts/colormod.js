@@ -26,32 +26,3 @@ function interpolateColors(color1, color2, steps) {
     }
     return result;
 }
-
-function displayColors(original, replacement) {
-    if (original.length !== replacement.length)
-    { alert("Differing original and replacement color count!"); return; }
-    Array.from(colorDisplay.children).forEach(c => colorDisplay.removeChild(c));
-    for (let i = 0; i < original.length; i++) {
-        let div = document.createElement('div');
-        div.style.justifyContent = "center";
-        div.style.alignItems = "center";
-        div.style.flexDirection = "row";
-        div.style.display = "flex";
-        div.style.padding = "5px";
-        div.style.height = "50px";
-        let rect1 = document.createElement('div');
-        rect1.style.width = rect1.style.height = "40px";
-        rect1.style.backgroundColor = original[i];
-        let arrow = document.createElement('p');
-        arrow.style.textAlign = "center";
-        arrow.innerText = "->";
-        arrow.style.flexGrow = "1";
-        let rect2 = document.createElement('div');
-        rect2.style.width = rect2.style.height = "40px";
-        rect2.style.backgroundColor = replacement[i];
-        div.appendChild(rect1);
-        div.appendChild(arrow);
-        div.appendChild(rect2);
-        colorDisplay.appendChild(div);
-    }
-}
