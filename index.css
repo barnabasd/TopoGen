@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0; padding: 0;
+    font-family: Poppins;
+    color: white;
+}
+
+body {
+    flex-direction: row;
+    display: flex;
+}
+
+#sidebar {
+    background-color: #2E2E2EFF;
+    width: 340px; height: 100dvh;
+    padding: 15px; display: flex;
+    flex-direction: column;
+}
+
+#sidebar h2 {
+    margin-bottom: 5px;
+}
+
+#sidebar input {
+    margin-bottom: 20px;
+    width: 300px;
+}
+
+#submitButton {
+    background-color: #245CC9FF;
+    border: none; height: 36px;
+    top: calc(100dvh - 56px);
+    border-radius: 20px;
+    position: absolute;
+}
+
+#submitButton:hover {
+    background-color: #1E67f8FF;
+}
+
+#sidebar input[type="color"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 80px;
+    border: 1px solid white;
+    border-radius: 20px;
+}
+
+#sidebar input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+#sidebar input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 20px;
+}
+
+#sidebar input[type="number"] {
+    color: black; border: none;
+    border-radius: 20px;
+    padding-left: 7px;
+    padding-top: 6px;
+    padding-bottom: 4px;
+}
+
+#sidebar label {
+    padding-bottom: 5px;
+}
+
+#sidebar > div > label {
+    padding-right: 10px;
+    width: 64px;
+}
+
+#sidebar > div > input {
+    margin-right: 10px;
+    width: 80px;
+}
+
+#colorDisplay {
+    margin-bottom: 51px;
+    margin-top: 10px;
+    flex-grow: 1;
+    overflow-y: scroll;
+}
+
+main {
+    background-color: #1E1E1EFF;
+    flex-grow: 15; height: 100dvh;
+    padding: 10px; display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#output {
+    border: 1px solid white;
+}
