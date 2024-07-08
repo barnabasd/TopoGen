@@ -16,7 +16,7 @@ function blurCanvas(canvas, radius) {
     const blurredImageData = hiddenCanvasCtx.getImageData(0, 0, canvas.width, canvas.height);
     ctx.putImageData(blurredImageData, 0, 0);
     const endTime = performance.now();
-    blurTimerDisplay.innerText = (endTime - startTime) + "ms";
+    blurTimerDisplay.innerText = Math.round(endTime - startTime) + "ms";
     return endTime - startTime;
 }
 
@@ -35,7 +35,7 @@ function posterizeCanvas(canvas, radius) {
     }
     context.putImageData(imageData, 0, 0);
     const endTime = performance.now();
-    posterizingDisplay.innerText = (endTime - startTime) + "ms";
+    posterizingDisplay.innerText = Math.round(endTime - startTime) + "ms";
     return endTime - startTime;
 }
 
@@ -57,6 +57,6 @@ function colorReplace(canvas, originalList, replaceList) {
     }
     ctx.putImageData(_imageData, 0, 0);
     const endTime = performance.now();
-    colorTimerDisplay.innerText = (endTime - startTime) + "ms";
+    colorTimerDisplay.innerText = Math.round(endTime - startTime) + "ms";
     return endTime - startTime;
 }
