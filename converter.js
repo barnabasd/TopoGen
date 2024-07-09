@@ -14,9 +14,6 @@ function rgbToHex(rgb) {
         data = data.slice(0, 7);
     return data;
 }
-function rgbToHexFast(r, g, b) {
-    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
-}
 function hexToHSL(hex) {
     let r = parseInt(hex.slice(1, 3), 16) / 255;
     let g = parseInt(hex.slice(3, 5), 16) / 255;
