@@ -1,5 +1,6 @@
 const posterizeLevel_slider = document.getElementById("input_posterizelevels");
 const blurRadius_slider = document.getElementById("input_blurradius");
+const sizeSelectorPanel = document.getElementById("sizeSelector");
 const output_canvas = document.getElementById("output_canvas");
 const debugMode = document.getElementById("debugMode");
 const debugData = document.getElementById("debugData");
@@ -49,4 +50,8 @@ function reset() {
         debugMode.click();
     posterizeLevel_data.innerText = "10";
     blurRadius_data.innerText = "10";
+}
+
+function toggleSizeSelectorPanel() {
+    sizeSelectorPanel.style.display = sizeSelectorPanel.style.display == "flex" ? "none" : "flex";
 }

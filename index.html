@@ -7,10 +7,24 @@
     <link rel="stylesheet" href="./nav.css">
 </head>
 <body>
+    <nav id="sizeSelector">
+        <section class="navsection">
+            <div>
+                <button style="height: 20px; flex-grow: 0; padding: 20px;" onclick="toggleSizeSelectorPanel();">&lt;</button>
+            </div>
+        </section>
+        <section class="navsection">
+            <h3><span>CUSTOM SIZE</span></h3>
+            <div>
+                <input type="number" name="sizePicker1" id="sizePicker1" value="800" min="1">
+                <input type="number" name="sizePicker2" id="sizePicker2" value="800" min="1">
+            </div>
+        </section>
+    </nav>
     <nav>
         <section class="navsection">
             <h3><span>IMAGE</span></h3>
-            <button>
+            <button onclick="toggleSizeSelectorPanel();">
                 <span>700 x 700</span>
                 <span>1 : 1</span>
             </button>

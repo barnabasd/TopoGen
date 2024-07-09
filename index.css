@@ -21,7 +21,7 @@ main {
 }
 
 #output_canvas {
-    border: 1px solid white;
+    border: 1px solid #FFFFFFFF;
 }
 
 .btn_style_primary {
@@ -41,4 +41,13 @@ main {
 }
 .btn_style_secondary:hover {
     background-color: #3E3E3EFF;
+}
+
+#sizeSelector {
+    position: absolute;
+    left: 0; top: 0;
+    height: 100dvh;
+    display: none;
+    width: 350px;
+    z-index: 2;
 }
