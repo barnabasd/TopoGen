@@ -9,6 +9,7 @@
 
 body {
     flex-direction: row;
+    overflow: hidden;
     display: flex;
 }
 
@@ -16,12 +17,15 @@ main {
     background-color: #1E1E1EFF;
     flex-grow: 1; height: 100dvh;
     justify-content: center;
+    object-fit: scale-down;
     align-items: center;
+    overflow: scroll;
     display: flex;
 }
 
 #output_canvas {
     border: 1px solid #FFFFFFFF;
+    object-fit: scale-down;
 }
 
 .btn_style_primary {

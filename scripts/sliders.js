@@ -7,9 +7,11 @@ window.addEventListener('mouseup', function() { isDragging = false; });
 
 function pslsReset(ignore) {
     if (isDragging || ignore) posterizeLevel_data.innerText = posterizeLevel_slider.value;
+    save();
 }
 function brsReset(ignore) {
     if (isDragging || ignore) blurRadius_data.innerText = blurRadius_slider.value;
+    save();
 }
 
 posterizeLevel_slider.addEventListener('mousemove', function() { pslsReset(false); });

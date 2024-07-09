@@ -1,6 +1,7 @@
 const posterizeLevel_slider = document.getElementById("input_posterizelevels");
 const blurRadius_slider = document.getElementById("input_blurradius");
 const sizeSelectorPanel = document.getElementById("sizeSelector");
+const sizeMenuButton = document.getElementById("sizeMenuButton");
 const output_canvas = document.getElementById("output_canvas");
 const debugMode = document.getElementById("debugMode");
 const debugData = document.getElementById("debugData");
@@ -10,6 +11,7 @@ const color2 = document.getElementById("colorPicker2");
 
 debugMode.addEventListener('click', function() {
     debugData.style.display = debugMode.checked ? "block" : "none";
+    save();
 });
 
 function fillCanvas() {
@@ -54,4 +56,26 @@ function reset() {
 
 function toggleSizeSelectorPanel() {
     sizeSelectorPanel.style.display = sizeSelectorPanel.style.display == "flex" ? "none" : "flex";
+}
+
+const sizePicker1 = document.getElementById("sizePicker1");
+const sizePicker2 = document.getElementById("sizePicker2");
+function refreshSizeUI() {
+    sizeMenuButton.children[0].innerText = sizePicker1.value + " x " + sizePicker2.value;
+    const w = parseInt(sizePicker1.value); const h = parseInt(sizePicker2.value);
+    output_canvas.width = w; output_canvas.height = h;
+    let dividend = Math.max(w, h);
+    let divisor = Math.min(w, h);
+    var gcd = -1;
+    while (gcd == -1) {
+        remainder = dividend % divisor;
+        if (remainder == 0) gcd = divisor;
+        else {
+            dividend = divisor;
+            divisor = remainder;
+        }
+    }
+    let aspectRatio = (w/gcd + ' : ' + h/gcd);
+    sizeMenuButton.children[1].innerText = aspectRatio;
+    save();
 }

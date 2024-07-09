@@ -16,24 +16,24 @@
         <section class="navsection">
             <h3><span>CUSTOM SIZE</span></h3>
             <div>
-                <input type="number" name="sizePicker1" id="sizePicker1" value="800" min="1">
-                <input type="number" name="sizePicker2" id="sizePicker2" value="800" min="1">
+                <input type="number" name="sizePicker1" id="sizePicker1" value="800" min="1" onchange="refreshSizeUI();">
+                <input type="number" name="sizePicker2" id="sizePicker2" value="800" min="1" onchange="refreshSizeUI();">
             </div>
         </section>
     </nav>
     <nav>
         <section class="navsection">
             <h3><span>IMAGE</span></h3>
-            <button onclick="toggleSizeSelectorPanel();">
-                <span>700 x 700</span>
+            <button onclick="toggleSizeSelectorPanel();" id="sizeMenuButton">
+                <span>800 x 800</span>
                 <span>1 : 1</span>
             </button>
         </section>
         <section class="navsection">
             <h3><span>COLORS</span></h3>
             <div>
-                <input type="color" name="colorPicker1" id="colorPicker1" value="#000000">
-                <input type="color" name="colorPicker2" id="colorPicker2" value="#FFFFFF">
+                <input type="color" name="colorPicker1" id="colorPicker1" value="#000000" onchange="save();">
+                <input type="color" name="colorPicker2" id="colorPicker2" value="#FFFFFF" onchange="save();">
             </div>
         </section>
         <section class="navsection">
@@ -94,6 +94,7 @@
     </main>
     <script src="./index.js"></script>
     <script src="./converter.js"></script>
+    <script src="./localStorage.js"></script>
     <script src="./scripts/blur.js"></script>
     <script src="./scripts/colors.js"></script>
     <script src="./scripts/noises.js"></script>
