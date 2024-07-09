@@ -79,3 +79,12 @@ function refreshSizeUI() {
     sizeMenuButton.children[1].innerText = aspectRatio;
     save();
 }
+
+function setSize(button) {
+    const w = button.innerText.replace(' ', '').split('x')[0];
+    const h = button.innerText.replace(' ', '').split('x')[0];
+    sizePicker1.value = parseInt(w);
+    sizePicker2.value = parseInt(h);
+    refreshSizeUI();
+    toggleSizeSelectorPanel();
+}

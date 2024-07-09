@@ -73,3 +73,9 @@ main {
 ::-webkit-scrollbar-corner {
     display: none;
 }
+
+.sizeButton {
+    height: 40px !important;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}

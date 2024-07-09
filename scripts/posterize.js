@@ -21,4 +21,3 @@ function posterizeCanvas(canvas, radius) {
 }
 
 load();
-generate();
