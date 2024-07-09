@@ -5,14 +5,8 @@ function hexToRgb(hex) {
     const b = bigint & 255;
     return { r, g, b };
 }
-function rgbToHex(rgb) {
-    const r = rgb.r.toString(16).padStart(2, '0');
-    const g = rgb.g.toString(16).padStart(2, '0');
-    const b = rgb.b.toString(16).padStart(2, '0');
-    let data = `#${r}${g}${b}`;
-    if (data.length > 7)
-        data = data.slice(0, 7);
-    return data;
+function rgbToHex(r, g, b) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
 }
 function hexToHSL(hex) {
     let r = parseInt(hex.slice(1, 3), 16) / 255;
