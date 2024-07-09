@@ -19,5 +19,3 @@ function posterizeCanvas(canvas, radius) {
     context.putImageData(imageData, 0, 0);
     return [(performance.now() - startTime), Array.from(colors)];
 }
-
-load();
