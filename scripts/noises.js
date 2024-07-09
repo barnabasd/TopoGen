@@ -12,7 +12,6 @@ function randomNoise(canvas) {
     ctx.putImageData(imageData, 0, 0);
     return performance.now() - time;
 }
-
 function perlinNoise(canvas) {
     const time = performance.now();
     var noiseCanvas = document.createElement('canvas');
