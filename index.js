@@ -47,4 +47,6 @@ function reset() {
     blurRadius_slider.value = "10";
     if (debugMode.checked)
         debugMode.click();
+    posterizeLevel_data.innerText = "10";
+    blurRadius_data.innerText = "10";
 }
