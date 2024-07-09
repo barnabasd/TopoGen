@@ -2,66 +2,88 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv='cache-control' content='no-cache'> 
-    <meta http-equiv='pragma' content='no-cache'>
-    <meta charset="UTF-8"><title>TopoGen</title>
-    <link rel="stylesheet" href="./index.css">
-    <meta http-equiv='expires' content='0'>
+    <title>TopoGen - Pattern Generator</title><meta charset="UTF-8">
+    <link rel="stylesheet" href="./_index.css">
+    <link rel="stylesheet" href="./_nav.css">
 </head>
 <body>
-    <div id="sidebar">
-        <h2>Settings</h2>
-        <label for="blurRadius">Blur Radius:</label>
-        <input type="range" name="blurRadius" id="blurRadius" min="0" max="30" value="10" step="5" onchange="generate();">
-        <label for="posterizeLevel">Posterizing Filter Level:</label>
-        <input type="range" name="posterizeLevel" id="posterizeLevel" min="1" max="30" value="15" onchange="generate();">
-        <div style="display: flex; flex-direction: row;">
-            <label for="gradientStartPicker">From:</label>
-            <input type="color" name="gradientStartPicker" id="gradientStartPicker">
-            <label for="gradientEndPicker">To:</label>
-            <input type="color" name="gradientEndPicker" id="gradientEndPicker" value="#FF0000">
-        </div>
-        <div style="display: flex; flex-direction: row;">
-            <label for="imgWidth">Width:</label>
-            <input type="number" name="imgWidth" id="imgWidth" value="700" placeholder="700">
-            <label for="imgHeight">Height:</label>
-            <input type="number" name="imgHeight" id="imgHeight" value="700" placeholder="700">
-        </div>
-        <h2>Timings</h2>
-        <div style="display: flex; flex-direction: row;">
-            <p style="flex-grow: 1;">Random noise took:</p>
-            <p id="randomnoisetiming">?ms</p>
-        </div>
-        <div style="display: flex; flex-direction: row;">
-            <p style="flex-grow: 1;">Perlin noise took:</p>
-            <p id="perlinnoisetiming">?ms</p>
-        </div>
-        <div style="display: flex; flex-direction: row;">
-            <p style="flex-grow: 1;">Blur took:</p>
-            <p id="blurtiming">?ms</p>
-        </div>
-        <div style="display: flex; flex-direction: row;">
-            <p style="flex-grow: 1;">Posterizing took:</p>
-            <p id="posterizingtiming">?ms</p>
-        </div>
-        <div style="display: flex; flex-direction: row;">
-            <p style="flex-grow: 1;">Colorizing took:</p>
-            <p id="colorizingtiming">?ms</p>
-        </div>
-        <hr>
-        <div style="display: flex; flex-direction: row;">
-            <p style="flex-grow: 1;"><b>Overall:</b></p>
-            <p id="overalltiming"><b>?ms</b></p>
-        </div>
-        <input type="button" value="Generate" id="submitButton" onmousedown="generate();">
-    </div>
+    <nav>
+        <section class="navsection">
+            <h3><span>IMAGE</span></h3>
+            <button>
+                <span>700 x 700</span>
+                <span>1 : 1</span>
+            </button>
+        </section>
+        <section class="navsection">
+            <h3><span>COLORS</span></h3>
+            <div>
+                <input type="color" name="colorPicker1" id="colorPicker1" value="#000000">
+                <input type="color" name="colorPicker2" id="colorPicker2" value="#FFFFFF">
+            </div>
+        </section>
+        <section class="navsection">
+            <h3><span>SETTINGS</span></h3>
+            <div style="flex-direction: row;">
+                <label for="input_blurradius" style="flex-grow: 1;">Blur radius:</label>
+                <label for="input_blurradius" id="input_blurradius_value">0</label>
+            </div>
+            <input type="range" name="input_blurradius" id="input_blurradius" value="10" min="0" max="30">
+            <div style="flex-direction: row; margin-top: 16px;">
+                <label for="input_posterizelevels" style="flex-grow: 1;">Color count:</label>
+                <label for="input_posterizelevels" id="input_posterizelevels_value">0</label>
+            </div>
+            <input type="range" name="input_posterizelevels" id="input_posterizelevels" value="10" min="1" max="20">
+        </section>
+        <section class="navsection">
+            <h3><span>ACTIONS</span></h3>
+            <div>
+                <input class="btn_style_primary" type="button" value="GENERATE" onclick="generate();">
+                <input class="btn_style_secondary" type="button" value="RESET" onclick="reset();">
+            </div>
+        </section>
+        <div style="flex-grow: 1;"></div>
+        <section class="navsection" style="margin-bottom: 0;">
+            <div class="debugModeDiv">
+                <input type="checkbox" name="debugMode" id="debugMode">
+                <label for="debugMode" style="float: right;">Enable debug mode</label>
+            </div>
+            <h3><span>DOWNLOAD</span></h3>
+            <div>
+                <input style="margin: 0; margin-right: 5px;" class="btn_style_secondary"
+                    type="button" value="Download as .png" onclick="download('png')">
+                <input style="margin: 0; margin-left: 5px;" class="btn_style_secondary"
+                    type="button" value="Download as .jpeg" onclick="download('jpeg')">
+            </div>
+        </section>
+    </nav>
     <main>
-        <canvas id="output" width="700" height="700"></canvas>
+        <div id="debugData" style="position: absolute; top: 10px; left: 360px; width: 200px; display: none;">
+            <div style="display: flex; flex-direction: row;">
+                <p style="flex-grow: 1;">Perlin noise took:</p>
+                <p>?ms</p>
+            </div>
+            <div style="display: flex; flex-direction: row;">
+                <p style="flex-grow: 1;">Blur took:</p>
+                <p>?ms</p>
+            </div>
+            <div style="display: flex; flex-direction: row;">
+                <p style="flex-grow: 1;">Posterizing took:</p>
+                <p>?ms</p>
+            </div>
+            <div style="display: flex; flex-direction: row;">
+                <p style="flex-grow: 1;">Colorizing took:</p>
+                <p>?ms</p>
+            </div>
+        </div>
+        <canvas id="output_canvas" width="800" height="800"></canvas>
     </main>
-    <script src="./scripts/colorConverter.js"></script>
-    <script src="./scripts/colormod.js"></script>
-    <script src="./scripts/effects.js"></script>
-    <script src="./scripts/noises.js"></script>
-    <script src="./index.js"></script>
+    <script src="./_index.js"></script>
+    <script src="./_converter.js"></script>
+    <script src="./_scripts/blur.js"></script>
+    <script src="./_scripts/colors.js"></script>
+    <script src="./_scripts/noises.js"></script>
+    <script src="./_scripts/sliders.js"></script>
+    <script src="./_scripts/posterize.js"></script>
 </body>
 </html>

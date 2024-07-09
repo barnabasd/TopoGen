@@ -1,3 +1,19 @@
+function hexToRgb(hex) {
+    const bigint = parseInt(hex.slice(1), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return { r, g, b };
+}
+function rgbToHex(rgb) {
+    const r = rgb.r.toString(16).padStart(2, '0');
+    const g = rgb.g.toString(16).padStart(2, '0');
+    const b = rgb.b.toString(16).padStart(2, '0');
+    let data = `#${r}${g}${b}`;
+    if (data.length > 7)
+        data = data.slice(0, 7);
+    return data;
+}
 function hexToHSL(hex) {
     let r = parseInt(hex.slice(1, 3), 16) / 255;
     let g = parseInt(hex.slice(3, 5), 16) / 255;
@@ -33,22 +49,6 @@ function hslToHex(h, s, l) {
     g = Math.round((g + m) * 255);
     b = Math.round((b + m) * 255);
     return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()}`;
-}
-function hexToRgb(hex) {
-    const bigint = parseInt(hex.slice(1), 16);
-    const r = (bigint >> 16) & 255;
-    const g = (bigint >> 8) & 255;
-    const b = bigint & 255;
-    return { r, g, b };
-}
-function rgbToHex(rgb) {
-    const r = rgb.r.toString(16).padStart(2, '0');
-    const g = rgb.g.toString(16).padStart(2, '0');
-    const b = rgb.b.toString(16).padStart(2, '0');
-    let data = `#${r}${g}${b}`;
-    if (data.length > 7)
-        data = data.slice(0, 7);
-    return data;
 }
 function getBrightness({ r, g, b }) {
     return 0.299 * r + 0.587 * g + 0.114 * b;

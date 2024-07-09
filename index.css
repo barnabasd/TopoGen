@@ -2,9 +2,9 @@
 
 * {
     box-sizing: border-box;
-    margin: 0; padding: 0;
+    padding: 0; margin: 0;
     font-family: Poppins;
-    color: white;
+    color: #FFFFFFFF;
 }
 
 body {
@@ -12,88 +12,33 @@ body {
     display: flex;
 }
 
-#sidebar {
-    background-color: #2E2E2EFF;
-    width: 340px; height: 100dvh;
-    padding: 15px; display: flex;
-    flex-direction: column;
-}
-
-#sidebar h2 {
-    margin-bottom: 5px;
-}
-
-#sidebar input {
-    margin-bottom: 20px;
-    width: 300px;
-}
-
-#submitButton {
-    background-color: #245CC9FF;
-    border: none; height: 36px;
-    top: calc(100dvh - 56px);
-    border-radius: 20px;
-    position: absolute;
-}
-
-#submitButton:hover {
-    background-color: #1E67f8FF;
-}
-
-#sidebar input[type="color"] {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 80px;
-    border: 1px solid white;
-    border-radius: 20px;
-}
-
-#sidebar input[type="color"]::-webkit-color-swatch-wrapper {
-	padding: 0;
-}
-#sidebar input[type="color"]::-webkit-color-swatch {
-    border: none;
-    border-radius: 20px;
-}
-
-#sidebar input[type="number"] {
-    color: black; border: none;
-    border-radius: 20px;
-    padding-left: 7px;
-    padding-top: 6px;
-    padding-bottom: 4px;
-}
-
-#sidebar label {
-    padding-bottom: 5px;
-}
-
-#sidebar > div > label {
-    padding-right: 10px;
-    width: 64px;
-}
-
-#sidebar > div > input {
-    margin-right: 10px;
-    width: 80px;
-}
-
-#colorDisplay {
-    margin-bottom: 51px;
-    margin-top: 10px;
-    flex-grow: 1;
-    overflow-y: scroll;
-}
-
 main {
     background-color: #1E1E1EFF;
-    flex-grow: 15; height: 100dvh;
-    padding: 10px; display: flex;
+    flex-grow: 1; height: 100dvh;
     justify-content: center;
     align-items: center;
-    overflow: scroll;
+    display: flex;
 }
 
-#output {
+#output_canvas {
     border: 1px solid white;
+}
+
+.btn_style_primary {
+    border: none; border-radius: 12px;
+    background-color: #2AAB2AFF;
+    flex-grow: 1; padding: 10px;
+}
+.btn_style_primary:hover {
+    background-color: #30D430FF;
+}
+.btn_style_secondary {
+    border: 2px solid #2AAB2AFF;
+    background-color: #2E2E2EFF;
+    flex-grow: 1; padding: 10px;
+    border-radius: 12px;
+    margin-left: 10px;
+}
+.btn_style_secondary:hover {
+    background-color: #3E3E3EFF;
 }
