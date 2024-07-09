@@ -21,9 +21,9 @@ function fillCanvas() {
 
 function generate() {
     fillCanvas();
-    const prelinTime    = perlinNoise(output_canvas);
-    const blurTime      = blurCanvas(output_canvas, parseInt(blurRadius_slider.value));
-    const posterizeTime = posterizeCanvas(output_canvas, parseInt(posterizeLevel_slider.value));
+    const prelinTime     = perlinNoise(output_canvas);
+    const blurTime       = gaussianBlur(output_canvas, parseInt(blurRadius_slider.value));
+    const posterizeTime  = posterizeCanvas(output_canvas, parseInt(posterizeLevel_slider.value));
     debugData.children[0].children[1].innerHTML = Math.floor(prelinTime) + "ms";
     debugData.children[1].children[1].innerHTML = Math.floor(blurTime) + "ms";
     debugData.children[2].children[1].innerHTML = Math.floor(posterizeTime[0]) + "ms";
