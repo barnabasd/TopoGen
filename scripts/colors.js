@@ -10,6 +10,7 @@ function getGradientColors(color1, color2, steps) {
     }
     return result;
 }
+
 function replaceColors(canvas, map) {
     const time = performance.now();
     const ctx = canvas.getContext('2d');
@@ -17,10 +18,9 @@ function replaceColors(canvas, map) {
     const imageData = _imageData.data;
     for (let i = 0; i < imageData.length; i += 4) {
         const r = Math.round(imageData[i]), g = Math.round(imageData[i + 1]), b = Math.round(imageData[i + 2]);
-        const originalHex = rgbToHex({ r, g, b });
-        console.log(originalHex);
-        if (!(map[originalHex] == undefined)) {
-            const replacementColor = map[originalHex];
+        const originalHex = rgbToHexFast(r, g, b);
+        const replacementColor = map[originalHex];
+        if (replacementColor) {
             imageData[i] = replacementColor.r;
             imageData[i + 1] = replacementColor.g;
             imageData[i + 2] = replacementColor.b;
