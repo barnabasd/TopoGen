@@ -17,8 +17,8 @@ const canvasW_input = document.getElementById("imagew");
 const canvasH_input = document.getElementById("imageh");
 let canvasW = output_canvas.width = parseInt(canvasW_input.value);
 let canvasH = output_canvas.height = parseInt(canvasH_input.value);
-canvasW_input.addEventListener('change', function() { canvasW = output_canvas.width = parseInt(canvasW_input.value); });
-canvasH_input.addEventListener('change', function() { canvasH = output_canvas.height = parseInt(canvasH_input.value); });
+canvasW_input.addEventListener('change', function() { canvasW = output_canvas.width = parseInt(canvasW_input.value); startGenerating(); });
+canvasH_input.addEventListener('change', function() { canvasH = output_canvas.height = parseInt(canvasH_input.value); startGenerating(); });
 
 function startGenerating() {
     let times = []; let time = performance.now();
