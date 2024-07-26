@@ -6,10 +6,9 @@ function posterizeAndColorize(iData, count, color1, color2, mode) {
     const rgb1 = hexToRgb(color1);
     const rgb2 = hexToRgb(color2);
     const colors = [];
-    const interpolateColorFunc = (mode === "shd") ? interpolateColorShorterHue : interpolateColorLongerHue;
     for (let i = 0; i < count; i++) {
         const factor = i / (count - 1);
-        colors.push(interpolateColorFunc(rgb1, rgb2, factor));
+        colors.push(interpolateColor(rgb1, rgb2, factor, mode));
     }
     for (let i = 0; i < data.length; i += 4) {
         const intensity = Math.floor((data[i] + data[i + 1] + data[i + 2]) / 3);

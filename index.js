@@ -58,3 +58,14 @@ function onresize() {
 }
 window.addEventListener('resize', onresize);
 onresize();
+
+function downloadas(type) {
+    const url = output_canvas.toDataURL("image/" + type)
+    let a = document.createElement('a');
+    a.download = "pattern." + type;
+    a.href = url;
+    a.click();
+    delete a;
+}
+
+startGenerating();

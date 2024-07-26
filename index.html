@@ -11,8 +11,8 @@
             <h2><span>SETTINGS</span></h2>
             <label for="scale_range">Scale:<span id="scale_value" style="float: right;">10</span></label>
             <input type="range" name="scale" id="scale_range" min="3" max="25" value="10">
-            <label for="smoothness_range">Smoothness:<span id="smoothness_value" style="float: right;">10</span></label>
-            <input type="range" name="scale" id="smoothness_range" min="3" max="35" value="10">
+            <label for="smoothness_range">Smoothness:<span id="smoothness_value" style="float: right;">15</span></label>
+            <input type="range" name="scale" id="smoothness_range" min="3" max="35" value="15">
             <label for="colorlevels_range">Color levels: <span id="colorlevels_value" style="float: right;">10</span></label>
             <input type="range" name="colorlevels" id="colorlevels_range" min="2" max="20" value="10">
             <h2><span>SIZE</span></h2>
@@ -36,11 +36,18 @@
             <div>
                 <label>Color interpolation:</label>
                 <select name="interpolationmode" id="interpolationmode_input">
-                    <option value="shd">Shorter hue distance</option>
-                    <option value="lhd">Longer hue distance</option>
+                    <option value="linear">Linear</option>
+                    <option value="cosine">Cosine</option>
+                    <option value="quadratic">Quadratic</option>
+                    <option value="cubic">Cubic</option>
                 </select>
             </div>
             <input type="button" value="GENERATE" onclick="startGenerating();">
+            <div>
+                <input type="button" value="Download as png" onclick="downloadas('png');">
+                <p style="color: transparent;">w</p>
+                <input type="button" value="Download as jpg" onclick="downloadas('jpg');">
+            </div>
         </div>
         <div class="sidebar-panel" style="display: none;">
             <p>This is the size selection menu!!</p>
