@@ -21,26 +21,15 @@ canvasW_input.addEventListener('change', function() { canvasW = output_canvas.wi
 canvasH_input.addEventListener('change', function() { canvasH = output_canvas.height = parseInt(canvasH_input.value); startGenerating(); });
 
 function startGenerating() {
-    let times = []; let time = performance.now();
-
     const perlinNoiseData = createPerlinNoise(canvasW, canvasH, parseInt(sliderdata.scale.slider.value) / 1000);
-    times.push(performance.now() - time); time = performance.now();
-
     const blurredData     = blurImageData(perlinNoiseData, parseInt(sliderdata.smoothness.slider.value));
-    times.push(performance.now() - time); time = performance.now();
-
     const level = parseInt(sliderdata.colorlevels.slider.value);
     const color1 = document.getElementById("colorpr").value;
     const color2 = document.getElementById("colorsc").value;
     const mode = interpolationmode_input.value;
-
     const posterizedData  = posterizeAndColorize(blurredData, level, color1, color2, mode);
-    times.push(performance.now() - time); time = performance.now();
-
     output_canvas.getContext('2d').putImageData(posterizedData, 0, 0);
     onresize();
-
-    console.log(times);
 }
 
 function onresize() {
