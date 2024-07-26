@@ -2,7 +2,7 @@
 ## An easy to use randomized topographic pattern generator
 
 ### How it works
-There are 3 steps to create a simple topograhic pattern:
+There are 3(4) steps to create a simple topograhic pattern:
  - Creating perlin noise
  - Blurring
  - Posterizing
