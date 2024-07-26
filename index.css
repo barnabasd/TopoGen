@@ -112,8 +112,6 @@ select > option { padding: 10px; }
     display: flex;
 }
 
-#canvas_wrapper > canvas {
-    width: auto; height: 100%;
-    max-width: 900px;
-    max-height: 9000px;
+#canvas_wrapper {
+    width: calc(100dvw - 360px);
 }

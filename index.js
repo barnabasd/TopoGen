@@ -21,8 +21,13 @@ canvasW_input.addEventListener('change', function() { canvasW = output_canvas.wi
 canvasH_input.addEventListener('change', function() { canvasH = output_canvas.height = parseInt(canvasH_input.value); });
 
 function startGenerating() {
+    let times = []; let time = performance.now();
+
     const perlinNoiseData = createPerlinNoise(canvasW, canvasH, parseInt(sliderdata.scale.slider.value) / 1000);
+    times.push(performance.now() - time); time = performance.now();
+
     const blurredData     = blurImageData(perlinNoiseData, parseInt(sliderdata.smoothness.slider.value));
+    times.push(performance.now() - time); time = performance.now();
 
     const level = parseInt(sliderdata.colorlevels.slider.value);
     const color1 = document.getElementById("colorpr").value;
@@ -30,6 +35,26 @@ function startGenerating() {
     const mode = interpolationmode_input.value;
 
     const posterizedData  = posterizeAndColorize(blurredData, level, color1, color2, mode);
+    times.push(performance.now() - time); time = performance.now();
 
     output_canvas.getContext('2d').putImageData(posterizedData, 0, 0);
+    onresize();
+
+    console.log(times);
 }
+
+function onresize() {
+    const aspectRatio = canvasW / canvasH;
+    const ww = window.innerWidth - 360;
+    const wh = window.innerHeight;
+    let canvasWidth = ww < canvasW ? ww : canvasW;
+    let canvasHeight = canvasWidth / aspectRatio;
+    if (canvasHeight > wh) {
+        canvasHeight = wh;
+        canvasWidth = canvasHeight * aspectRatio;
+    }
+    output_canvas.style.maxWidth = canvasWidth + "px";
+    output_canvas.style.maxHeight = canvasHeight + "px";
+}
+window.addEventListener('resize', onresize);
+onresize();
