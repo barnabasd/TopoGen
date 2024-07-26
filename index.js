@@ -1,90 +1,71 @@
-const posterizeLevel_slider = document.getElementById("input_posterizelevels");
-const blurRadius_slider = document.getElementById("input_blurradius");
-const sizeSelectorPanel = document.getElementById("sizeSelector");
-const sizeMenuButton = document.getElementById("sizeMenuButton");
+const sliderdata = { 
+    scale:       { slider: document.getElementById("scale_range"),       display: document.getElementById("scale_value"),      },
+    smoothness:  { slider: document.getElementById("smoothness_range"),  display: document.getElementById("smoothness_value")  },
+    colorlevels: { slider: document.getElementById("colorlevels_range"), display: document.getElementById("colorlevels_value") }
+}
+sliderdata.colorlevels.slider.addEventListener('mousemove', function() { sliderdata.colorlevels.display.innerText = sliderdata.colorlevels.slider.value; });
+sliderdata.smoothness.slider.addEventListener('mousemove', function() { sliderdata.smoothness.display.innerText = sliderdata.smoothness.slider.value; });
+sliderdata.scale.slider.addEventListener('mousemove', function() { sliderdata.scale.display.innerText = sliderdata.scale.slider.value; });
+sliderdata.colorlevels.slider.addEventListener('change', function() { sliderdata.colorlevels.display.innerText = sliderdata.colorlevels.slider.value; startGenerating(); });
+sliderdata.smoothness.slider.addEventListener('change', function() { sliderdata.smoothness.display.innerText = sliderdata.smoothness.slider.value; startGenerating(); });
+sliderdata.scale.slider.addEventListener('change', function() { sliderdata.scale.display.innerText = sliderdata.scale.slider.value; startGenerating(); });
+
+const interpolationmode_input = document.getElementById("interpolationmode_input");
 const output_canvas = document.getElementById("output_canvas");
-const debugMode = document.getElementById("debugMode");
-const debugData = document.getElementById("debugData");
 
-const color1 = document.getElementById("colorPicker1");
-const color2 = document.getElementById("colorPicker2");
+const canvasW_input = document.getElementById("imagew");
+const canvasH_input = document.getElementById("imageh");
+let canvasW = output_canvas.width = parseInt(canvasW_input.value);
+let canvasH = output_canvas.height = parseInt(canvasH_input.value);
+canvasW_input.addEventListener('change', function() { canvasW = output_canvas.width = parseInt(canvasW_input.value); startGenerating(); });
+canvasH_input.addEventListener('change', function() { canvasH = output_canvas.height = parseInt(canvasH_input.value); startGenerating(); });
 
-debugMode.addEventListener('click', function() {
-    debugData.style.display = debugMode.checked ? "block" : "none";
-    save();
-});
+function startGenerating() {
+    let times = []; let time = performance.now();
 
-function fillCanvas() {
-    const ctx = output_canvas.getContext('2d');
-    ctx.fillRect(0, 0, output_canvas.width, output_canvas.height);
+    const perlinNoiseData = createPerlinNoise(canvasW, canvasH, parseInt(sliderdata.scale.slider.value) / 1000);
+    times.push(performance.now() - time); time = performance.now();
+
+    const blurredData     = blurImageData(perlinNoiseData, parseInt(sliderdata.smoothness.slider.value));
+    times.push(performance.now() - time); time = performance.now();
+
+    const level = parseInt(sliderdata.colorlevels.slider.value);
+    const color1 = document.getElementById("colorpr").value;
+    const color2 = document.getElementById("colorsc").value;
+    const mode = interpolationmode_input.value;
+
+    const posterizedData  = posterizeAndColorize(blurredData, level, color1, color2, mode);
+    times.push(performance.now() - time); time = performance.now();
+
+    output_canvas.getContext('2d').putImageData(posterizedData, 0, 0);
+    onresize();
+
+    console.log(times);
 }
 
-function generate() {
-    fillCanvas();
-    const prelinTime     = perlinNoise(output_canvas);
-    const blurTime       = gaussianBlur(output_canvas, parseInt(blurRadius_slider.value));
-    const posterizeTime  = posterizeCanvas(output_canvas, parseInt(posterizeLevel_slider.value));
-    debugData.children[0].children[1].innerHTML = Math.floor(prelinTime) + "ms";
-    debugData.children[1].children[1].innerHTML = Math.floor(blurTime) + "ms";
-    debugData.children[2].children[1].innerHTML = Math.floor(posterizeTime[0]) + "ms";
-    let originalColors = sortHexColorsByBrightness(posterizeTime[1]);
-    let newColors = getGradientColors(color1.value, color2.value, originalColors.length - 1);
-    let colorMap = new Map();
-    for (let i = 0; i < originalColors.length; i++) {
-        colorMap[originalColors[i]] = newColors[i];
+function onresize() {
+    const aspectRatio = canvasW / canvasH;
+    const ww = window.innerWidth - 360;
+    const wh = window.innerHeight;
+    let canvasWidth = ww < canvasW ? ww : canvasW;
+    let canvasHeight = canvasWidth / aspectRatio;
+    if (canvasHeight > wh) {
+        canvasHeight = wh;
+        canvasWidth = canvasHeight * aspectRatio;
     }
-    let colorTime = replaceColors(output_canvas, colorMap);
-    debugData.children[3].children[1].innerHTML = Math.floor(colorTime) + "ms";
+    output_canvas.style.maxWidth = canvasWidth + "px";
+    output_canvas.style.maxHeight = canvasHeight + "px";
 }
+window.addEventListener('resize', onresize);
+onresize();
 
-function download(type) {
+function downloadas(type) {
     const url = output_canvas.toDataURL("image/" + type)
     let a = document.createElement('a');
     a.download = "pattern." + type;
     a.href = url;
     a.click();
+    delete a;
 }
 
-function reset() {
-    posterizeLevel_slider.value = "10";
-    blurRadius_slider.value = "10";
-    if (debugMode.checked)
-        debugMode.click();
-    posterizeLevel_data.innerText = "10";
-    blurRadius_data.innerText = "10";
-}
-
-function toggleSizeSelectorPanel() {
-    sizeSelectorPanel.style.display = sizeSelectorPanel.style.display == "flex" ? "none" : "flex";
-}
-
-const sizePicker1 = document.getElementById("sizePicker1");
-const sizePicker2 = document.getElementById("sizePicker2");
-function refreshSizeUI() {
-    sizeMenuButton.children[0].innerText = sizePicker1.value + " x " + sizePicker2.value;
-    const w = parseInt(sizePicker1.value); const h = parseInt(sizePicker2.value);
-    output_canvas.width = w; output_canvas.height = h;
-    let dividend = Math.max(w, h);
-    let divisor = Math.min(w, h);
-    var gcd = -1;
-    while (gcd == -1) {
-        remainder = dividend % divisor;
-        if (remainder == 0) gcd = divisor;
-        else {
-            dividend = divisor;
-            divisor = remainder;
-        }
-    }
-    let aspectRatio = (w/gcd + ' : ' + h/gcd);
-    sizeMenuButton.children[1].innerText = aspectRatio;
-    save();
-}
-
-function setSize(button) {
-    const w = button.innerText.replace(' ', '').split('x')[0];
-    const h = button.innerText.replace(' ', '').split('x')[0];
-    sizePicker1.value = parseInt(w);
-    sizePicker2.value = parseInt(h);
-    refreshSizeUI();
-    toggleSizeSelectorPanel();
-}
+startGenerating();

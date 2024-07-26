@@ -2,115 +2,64 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TopoGen - Pattern Generator</title><meta charset="UTF-8">
+    <meta charset="UTF-8"><title>TopoGenV2</title>
     <link rel="stylesheet" href="./index.css">
-    <link rel="stylesheet" href="./nav.css">
 </head>
 <body>
-    <nav id="sizeSelector">
-        <section class="navsection">
+    <div id="sidebar">
+        <div class="sidebar-panel" style="display: block;">
+            <h2><span>SETTINGS</span></h2>
+            <label for="scale_range">Scale:<span id="scale_value" style="float: right;">10</span></label>
+            <input type="range" name="scale" id="scale_range" min="3" max="25" value="10">
+            <label for="smoothness_range">Smoothness:<span id="smoothness_value" style="float: right;">15</span></label>
+            <input type="range" name="scale" id="smoothness_range" min="3" max="35" value="15">
+            <label for="colorlevels_range">Color levels: <span id="colorlevels_value" style="float: right;">10</span></label>
+            <input type="range" name="colorlevels" id="colorlevels_range" min="2" max="20" value="10">
+            <h2><span>SIZE</span></h2>
             <div>
-                <button style="height: 20px; flex-grow: 0; padding: 20px;" onclick="toggleSizeSelectorPanel();">&lt;</button>
+                <label for="imagew">Width:</label>
+                <input type="number" name="imagew" id="imagew" min="0" value="800">
             </div>
-        </section>
-        <section class="navsection">
-            <h3><span>CUSTOM SIZE</span></h3>
             <div>
-                <input type="number" name="sizePicker1" id="sizePicker1" value="800" min="1" onchange="refreshSizeUI();">
-                <input type="number" name="sizePicker2" id="sizePicker2" value="800" min="1" onchange="refreshSizeUI();">
+                <label for="imageh">Height:</label>
+                <input type="number" name="imageh" id="imageh" min="0" value="800">
             </div>
-        </section>
-        <section class="navsection">
-            <h3><span>PREDEFINED SIZES</span></h3>
-            <button class="sizeButton" onclick="setSize(this);">3840 x 2160</button>
-            <button class="sizeButton" onclick="setSize(this);">1920 x 1080</button>
-            <button class="sizeButton" onclick="setSize(this);">720 x 640</button>
-            <br>
-            <button class="sizeButton" onclick="setSize(this);">800 x 800</button>
-        </section>
-    </nav>
-    <nav>
-        <section class="navsection">
-            <h3><span>IMAGE</span></h3>
-            <button onclick="toggleSizeSelectorPanel();" id="sizeMenuButton">
-                <span>800 x 800</span>
-                <span>1 : 1</span>
-                <p style="position: absolute; top: 64px; left: 295px; font-size: 30px;">&gt;</p>
-            </button>
-        </section>
-        <section class="navsection">
-            <h3><span>COLORS</span></h3>
+            <h2><span>COLORS</span></h2>
             <div>
-                <input type="color" name="colorPicker1" id="colorPicker1" value="#000000" onchange="save();">
-                <input type="color" name="colorPicker2" id="colorPicker2" value="#FFFFFF" onchange="save();">
+                <label for="colorpr">Primary color:</label>
+                <input type="color" name="colorpr" id="colorpr" value="#FF0000">
             </div>
-        </section>
-        <section class="navsection">
-            <h3><span>SETTINGS</span></h3>
-            <div style="flex-direction: row;">
-                <label for="input_blurradius" style="flex-grow: 1;">Blur radius:</label>
-                <label for="input_blurradius" id="input_blurradius_value">10</label>
-            </div>
-            <input type="range" name="input_blurradius" id="input_blurradius" value="10" min="0" max="30">
-            <div style="flex-direction: row; margin-top: 16px;">
-                <label for="input_posterizelevels" style="flex-grow: 1;">Posterization level:</label>
-                <label for="input_posterizelevels" id="input_posterizelevels_value">10</label>
-            </div>
-            <input type="range" name="input_posterizelevels" id="input_posterizelevels" value="10" min="1" max="20">
-        </section>
-        <section class="navsection">
-            <h3><span>ACTIONS</span></h3>
             <div>
-                <input class="btn_style_primary" type="button" value="GENERATE" onclick="generate();">
-                <input class="btn_style_secondary" type="button" value="RESET" onclick="reset();">
+                <label for="colorsc">Secondary color:</label>
+                <input type="color" name="colorsc" id="colorsc" value="#FFFF00">
             </div>
-        </section>
-        <div style="flex-grow: 1;"></div>
-        <section class="navsection" style="margin-bottom: 0;">
-            <div class="debugModeDiv">
-                <input type="checkbox" name="debugMode" id="debugMode">
-                <label for="debugMode" style="float: right;">Enable debug mode</label>
-            </div>
-            <h3><span>DOWNLOAD</span></h3>
             <div>
-                <input style="margin: 0; margin-right: 5px;" class="btn_style_secondary"
-                    type="button" value="Download as .png" onclick="download('png')">
-                <input style="margin: 0; margin-left: 5px;" class="btn_style_secondary"
-                    type="button" value="Download as .jpeg" onclick="download('jpeg')">
+                <label>Color interpolation:</label>
+                <select name="interpolationmode" id="interpolationmode_input">
+                    <option value="linear">Linear</option>
+                    <option value="cosine">Cosine</option>
+                    <option value="quadratic">Quadratic</option>
+                    <option value="cubic">Cubic</option>
+                </select>
             </div>
-        </section>
-        <section class="navsection" style="position: absolute; top: 0; left: calc(100% - 210px);">
-            <p style="color: #888888FF;">UI inspired by <a style="color: #888888FF;" href="app.haikei.app">Haikei.app</a></p>
-        </section>
-    </nav>
-    <main>
-        <div id="debugData" style="position: absolute; top: 10px; left: 360px; width: 200px; display: none;">
-            <div style="display: flex; flex-direction: row;">
-                <p style="flex-grow: 1;">Perlin noise took:</p>
-                <p>?ms</p>
-            </div>
-            <div style="display: flex; flex-direction: row;">
-                <p style="flex-grow: 1;">Blur took:</p>
-                <p>?ms</p>
-            </div>
-            <div style="display: flex; flex-direction: row;">
-                <p style="flex-grow: 1;">Posterizing took:</p>
-                <p>?ms</p>
-            </div>
-            <div style="display: flex; flex-direction: row;">
-                <p style="flex-grow: 1;">Colorizing took:</p>
-                <p>?ms</p>
+            <input type="button" value="GENERATE" onclick="startGenerating();">
+            <div>
+                <input type="button" value="Download as png" onclick="downloadas('png');">
+                <p style="color: transparent;">w</p>
+                <input type="button" value="Download as jpg" onclick="downloadas('jpg');">
             </div>
         </div>
-        <canvas id="output_canvas" width="800" height="800"></canvas>
-    </main>
+        <div class="sidebar-panel" style="display: none;">
+            <p>This is the size selection menu!!</p>
+        </div>
+    </div>
+    <div id="canvas_wrapper">
+        <canvas width="800" height="800" id="output_canvas"></canvas>
+    </div>
+    <script src="./scripts/color_interpolation.js"></script>
+    <script src="./scripts/posterization.js"></script>
+    <script src="./scripts/gaussian_blur.js"></script>
+    <script src="./scripts/perlin_noise.js"></script>
     <script src="./index.js"></script>
-    <script src="./converter.js"></script>
-    <script src="./localStorage.js"></script>
-    <script src="./scripts/blur.js"></script>
-    <script src="./scripts/colors.js"></script>
-    <script src="./scripts/noises.js"></script>
-    <script src="./scripts/sliders.js"></script>
-    <script src="./scripts/posterize.js"></script>
 </body>
 </html>
